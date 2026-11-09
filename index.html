@@ -244,11 +244,115 @@
 .ack-ubri img{width:min(100%,475px)}
 .ack-link{font-size:11px;color:#157a80;font-weight:700;align-self:flex-end}
 @media(max-width:640px){.topbar .brand{flex-basis:100%}.topbar .brand h1{font-size:19px}.ack-grid{grid-template-columns:minmax(0,1fr)}.ack-card{min-height:170px}.ack-logo{min-height:90px}}
+</style><style>
+/* Horizontal scenario editor and full-width analyses. No prediction model changes. */
+.shell{max-width:1450px;padding-left:26px;padding-right:26px}
+.grid{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:100%}
+.input-panel{position:relative;top:auto;width:100%;min-width:0;padding:20px 24px 17px;border-radius:17px}
+.results{width:100%;min-width:0;gap:18px}
+.chartbox{height:420px}
+.heatmap-box{height:630px}
+.input-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:18px}
+.input-heading h3{font-size:19px;margin:4px 0 0;letter-spacing:-.02em;color:#172f4a}
+.input-heading p{margin:3px 0 0;font-size:11px;color:#718093}
+.input-heading .section-kicker{font-size:10px}
+.input-heading .primary{width:auto;min-width:154px;white-space:nowrap;padding:11px 17px}
+.primary-inputs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.input-panel .primary-inputs .field,.input-panel .advanced-grid .field{min-width:0;margin:0}
+.input-panel .field label{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;justify-content:flex-start;font-size:11px;color:#3b4d65;margin-bottom:6px}
+.input-panel .field label .hint{font-size:10px;white-space:nowrap}
+.input-panel .input-wrap input,.input-panel .input-wrap select{min-width:0}
+.input-panel .primary-field .input-wrap{min-height:40px;border-radius:9px}
+.range-row{display:flex;gap:21px;align-items:center;padding:13px 0 12px;margin:15px 0 0;border-top:1px solid #edf0f4}
+.range-heading{min-width:176px;display:flex;flex-direction:column;gap:3px}
+.range-heading strong{font-size:12px;color:#344c66}
+.range-heading span{font-size:10px;color:#8190a1}
+.rangeSlot{flex:1;min-width:0}
+.range-row .scenario-controls{display:flex;gap:12px;padding:0;margin:0;background:transparent;border:0;justify-content:flex-start;align-items:center}
+.range-row .scenario-field{flex:0 1 200px;max-width:220px;min-width:130px}
+.range-row .scenario-field label{font-size:10px;margin-bottom:4px}
+.range-row .scenario-field .input-wrap input{padding:7px 10px;font-size:12px}
+.advanced-settings{border-top:1px solid #edf0f4;margin:1px 0 0}
+.advanced-settings summary{list-style:none;display:flex;align-items:center;gap:15px;padding:12px 0 9px;cursor:pointer;color:#36516e;user-select:none}
+.advanced-settings summary::-webkit-details-marker{display:none}
+.advanced-settings .advanced-heading{font-size:12px;font-weight:750}
+.advanced-settings .advanced-preview{color:#8190a1;font-size:11px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.advanced-chevron{font-size:17px;color:#72849a;transition:transform .15s}
+.advanced-settings[open] .advanced-chevron{transform:rotate(180deg)}
+.advanced-groups{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;padding:14px 0 15px}
+.advanced-group{padding:15px 16px 17px;background:#f8fafc;border:1px solid #e7ecf2;border-radius:12px;min-width:0}
+.advanced-group h4{margin:0 0 12px;font-size:11px;color:#36506c;text-transform:uppercase;letter-spacing:.04em}
+.advanced-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.token-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+.input-meta{display:flex;flex-direction:column;gap:2px}
+.input-meta .lab-model-status{margin:7px 0 0;padding:9px 12px;border-radius:9px;font-size:10px}
+.input-meta .inline-details{margin:5px 0 0}
+.results-intro{padding:6px 2px 0}
+.results-intro h2{font-size:21px}
+.shared-investor-note{margin-bottom:8px}
+/* A separate, slim mirrored control strip appears only after the full editor scrolls away. */
+.quickbar{position:fixed;z-index:100;left:0;right:0;top:0;background:rgba(255,255,255,.97);border-bottom:1px solid #dde6ef;box-shadow:0 7px 24px rgba(20,33,61,.11);backdrop-filter:blur(10px)}
+.quickbar-inner{max-width:1450px;margin:0 auto;padding:9px 26px;display:grid;grid-template-columns:83px 1fr 1fr .87fr 1.1fr 1fr 1.1fr 114px;gap:10px;align-items:end}
+.quickbar-title{display:flex;flex-direction:column;gap:1px;padding-bottom:8px}
+.quickbar-title strong{font-size:13px;color:#1b3452}
+.quickbar-title span{font-size:9px;color:#8ca0b3;letter-spacing:.06em;font-weight:750}
+.quick-field{display:flex;flex-direction:column;min-width:0;gap:4px;color:#51647b;font-size:10px;font-weight:700}
+.quick-field input,.quick-field select{min-width:0;width:100%;height:35px;border:1px solid #d2dde7;border-radius:8px;background:#fff;color:#19324f;font:inherit;font-size:12px;font-weight:550;padding:5px 9px;outline:none}
+.quick-field input:focus,.quick-field select:focus{border-color:#5998b4;box-shadow:0 0 0 2px rgba(32,131,163,.12)}
+.quick-all{height:35px;width:100%;border-radius:8px;border:1px solid #cddce8;background:#edf4f9;color:#244563;font-size:11px;font-weight:750;cursor:pointer;white-space:nowrap}
+.quick-all:hover{background:#e3edf6}
+@media(max-width:1160px){
+ .primary-inputs{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .quickbar-inner{grid-template-columns:1fr 1fr .8fr 1.1fr 1fr 112px}
+ .quickbar-title,.quick-max{display:none}
+ .advanced-groups{grid-template-columns:1fr 1fr;gap:14px}
+}
+@media(max-width:760px){
+ .shell{padding-left:14px;padding-right:14px}
+ .input-panel{padding:17px 16px}
+ .primary-inputs{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .input-heading{align-items:flex-start;gap:11px}
+ .input-heading h3{font-size:17px}
+ .input-heading .primary{min-width:0;padding:9px 11px;font-size:11px}
+ .range-row{flex-wrap:wrap;gap:9px}
+ .range-heading{min-width:0}
+ .rangeSlot{flex-basis:100%}
+ .range-row .scenario-field{flex:1;min-width:0}
+ .advanced-groups{grid-template-columns:1fr}
+ .advanced-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .chartbox{height:350px}
+ .heatmap-box{height:520px}
+ .results-intro h2{font-size:18px}
+ .quickbar{top:auto;bottom:0;border-top:1px solid #dde6ef;border-bottom:0;box-shadow:0 -5px 20px rgba(20,33,61,.1)}
+ .quickbar-inner{padding:9px 13px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px;gap:9px}
+ .quick-principal,.quick-maturity,.quick-fees,.quick-max{display:none}
+ .quick-field input,.quick-field select,.quick-all{height:36px}
+ #costPage{padding-bottom:70px}
+}
+@media(max-width:430px){
+ .input-heading .primary{font-size:10px;min-height:39px}
+ .primary-inputs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .primary-inputs .field label{font-size:10px}
+ .primary-inputs .field label .hint{display:none}
+ .advanced-settings .advanced-preview{display:none}
+ .range-row .scenario-controls{gap:9px}
+ .quickbar-inner{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 80px}
+}
 </style></head>
 <body>
 <div class="shell">
 <div class="topbar"><div class="brand"><h1>Issuance Cost Savings Prediction Model for Tokenized Municipal Bonds</h1></div><nav aria-label="Website sections" class="app-tabs" role="tablist"><button aria-controls="costPage" aria-selected="true" class="app-tab" id="tabCost" role="tab" tabindex="0" type="button">Cost analysis</button><button aria-controls="methodPage" aria-selected="false" class="app-tab" id="tabMethod" role="tab" tabindex="-1" type="button">Model development</button></nav></div>
-<section aria-labelledby="tabCost" id="costPage" role="tabpanel" tabindex="0">
+<section aria-labelledby="tabCost" id="costPage" role="tabpanel" tabindex="0"><div aria-label="Quick scenario controls" class="quickbar" hidden="" id="quickBar" role="region">
+<div class="quickbar-inner">
+<div class="quickbar-title"><strong>Scenario</strong><span>QUICK EDIT</span></div>
+<label class="quick-field quick-principal" for="quickPrincipal"><span>Principal ($M)</span><input id="quickPrincipal" max="1000" min="0.1" step="0.25" type="number" value="10"/></label>
+<label class="quick-field quick-investors" for="quickInvestors"><span>Investors</span><input id="quickInvestors" min="100" step="100" type="number" value="1000"/></label>
+<label class="quick-field quick-maturity" for="quickMaturity"><span>Maturity (years)</span><input id="quickMaturity" max="30" min="1" step="1" type="number" value="10"/></label>
+<label class="quick-field quick-chain" for="quickChain"><span>Network</span><select id="quickChain"><option value="ethereum">Ethereum</option><option value="base">Base</option><option value="xrpl">XRPL EVM</option></select></label>
+<label class="quick-field quick-fees" for="quickFeeScenario"><span>Network fees</span><select id="quickFeeScenario"><option value="p10">Low (P10)</option><option value="p50">Median (P50)</option><option value="p90">High (P90)</option></select></label>
+<label class="quick-field quick-max" for="quickChartMax"><span>Chart max investors</span><input id="quickChartMax" min="100" step="100" type="number" value="250000"/></label>
+<button class="quick-all" id="editAllInputs" type="button">All inputs <span aria-hidden="true">↗</span></button>
+</div></div>
 <section class="hero hero-hidden">
 <div class="eyebrow">Traditional vs tokenized issuance</div>
 <h2>Compare traditional issuance fees with tokenized lifecycle execution costs.</h2>
@@ -257,228 +361,176 @@
 </section>
 <section aria-label="Cost comparison summary" class="overview">
 <div class="overview-top"><span class="section-kicker">COST COMPARISON</span><h2>How much can tokenization save?</h2></div>
-
 <div class="kpis">
-
-
-
-
 <div class="kpi feature-savings"><div class="label">Estimated cost savings</div><div class="value" id="savingKpi">—</div><div class="sub" id="savingSub">—</div></div><div class="kpi"><div class="label">Traditional cost</div><div class="value" id="tradKpi">—</div><div class="sub">Traditional issuance fees</div></div><div class="kpi"><div class="label">Tokenized cost</div><div class="value" id="tokenKpi">—</div><div class="sub" id="tokenSub">—</div></div><div class="kpi break"><div class="label">Break-even investors</div><div class="value" id="breakKpi">—</div><div class="sub" id="breakSub">Tokenized cost = traditional cost</div></div></div></section><main class="grid">
-<aside class="panel input-panel">
-<div class="panel-title"><h3>Scenario inputs</h3></div>
-<div class="section-label first">Traditional model</div>
-<div class="field"><label for="principal">Principal amount</label><div class="input-wrap"><span class="prefix">$</span><input id="principal" max="1000" min="0.1" step="0.25" type="number" value="10"/><span class="suffix">million</span></div></div>
-<div class="field"><label for="rating">Credit rating</label><div class="input-wrap"><select id="rating"></select></div></div>
-<div class="field"><label for="sale">Sale type</label><div class="input-wrap"><select id="sale"><option>Competitive</option><option>Negotiated</option></select></div></div>
-<div class="field"><label for="government">Government type</label><div class="input-wrap"><select id="government"><option value="CITY">City</option><option value="COUNTY">County</option></select></div></div>
-<div class="field"><label for="purpose">Issue purpose</label><div class="input-wrap"><select id="purpose"><option value="GeneralPurpose">General purpose</option><option value="Transportation">Transportation</option><option value="WaterRelated">Water related</option><option value="Recreation">Recreation</option><option value="PublicSafety">Public safety</option><option value="OtherPurpose">Other purpose</option></select></div></div>
-<div class="field"><label for="agency">Rating agency</label><div class="input-wrap"><select id="agency"><option>S&amp;P</option><option>Moody's</option><option>Fitch</option></select></div></div>
-<div class="field"><label for="year">Fiscal year</label><div class="input-wrap"><input id="year" max="2100" min="2015" step="1" type="number" value="2026"/></div></div>
-
-<div class="section-label">Tokenized model</div>
-<div class="field"><label for="chain">Blockchain network <span class="hint">historical fee model</span></label><div class="input-wrap"><select id="chain"><option value="ethereum">Ethereum Mainnet</option><option value="base">Base (L2 + L1)</option><option value="xrpl">XRPL EVM Sidechain</option></select></div></div>
-<div class="field"><label for="stablecoin">Settlement stablecoin <span class="hint">separate gas models</span></label><div class="input-wrap"><select id="stablecoin"><option selected="" value="USDC">USDC · official</option><option value="RLUSD">RLUSD · official</option></select></div></div>
-<div class="field"><label for="batchSize">Distribution batch size</label><div class="input-wrap"><select id="batchSize"><option value="500">500</option><option selected="" value="200">200</option><option value="100">100</option><option value="50">50</option><option value="25">25</option><option value="10">10</option><option value="5">5</option></select></div></div>
-<div class="field"><label for="investorCountInput">Number of investors <span class="hint">100 or more</span></label><div class="input-wrap"><input id="investorCountInput" min="100" step="100" type="number" value="1000"/></div></div>
-<div class="field"><label for="feeScenario">Historical fee scenario <span class="hint">each chain</span></label><div class="input-wrap"><select id="feeScenario"><option value="p10">Low (P10)</option><option selected="" value="p50">Median (P50)</option><option value="p90">High (P90)</option></select></div></div>
-
-<div class="field"><label for="maturity">Maturity</label><div class="input-wrap"><input id="maturity" max="30" min="1" step="1" type="number" value="10"/><span class="suffix">years</span></div></div>
-<div class="field"><label for="frequency">Coupon distributions</label><div class="input-wrap"><select id="frequency"><option value="1">1 / year</option><option selected="" value="2">2 / year</option><option value="4">4 / year</option><option value="12">12 / year</option></select></div></div>
-<div class="field"><label for="coupon">Coupon rate <span class="hint">fixed research calibration</span></label><div class="input-wrap"><input disabled="" id="coupon" max="5" min="5" type="number" value="5"/><span class="suffix">%</span></div></div>
-<div class="lab-model-status" id="modelDomainStatus">Loading research model…</div>
-<button class="primary" id="runBtn">Estimate costs</button>
-<div class="error" id="errorBox"></div>
-<details class="inline-details"><summary>Input assumptions</summary><div class="note" id="modelNote">The final production model was trained on FY2015–FY2025; FY2026+ is prospective.</div><div class="note" id="gasInputNote">Three network-specific 365-day fee series (2025-10-26 to 2026-10-25); per-day gas price × native-asset USD rate. Base adds a modeled L1 data fee. P10–P90 describe historical market conditions, not forecast probabilities.</div><div class="note">The gas model was calibrated with <strong>$10M principal, 5% annual coupon and $10 token price</strong>. Changing Traditional principal does not recalibrate blockchain gas; comparisons at other principal sizes are conditional scenarios.</div></details></aside>
-<section class="results"><div class="results-intro"><span class="section-kicker">SENSITIVITY ANALYSIS</span>
-<h2>When is tokenization more cost-effective?</h2></div>
-
-
-
-
-
-
-
-
-<div class="panel scenario-panel">
-<div class="chart-header"><div><h3>01 · Cost savings by maturity</h3></div><div class="legend"><span><i class="scenario-band"></i>Investor range</span><span><i class="scenario-line"></i>Selected investors</span><span><i class="scenario-zero"></i>Zero savings</span></div></div>
-<div class="scenario-controls">
+<aside class="panel input-panel"><div class="input-heading"><div><div class="section-kicker">CONFIGURE YOUR SCENARIO</div><h3>Scenario inputs</h3><p>Update any variable to recalculate the cost comparison.</p></div><div id="inputRunSlot"><button class="primary" id="runBtn">Estimate costs</button></div></div><div aria-label="Key model inputs" class="primary-inputs"><div class="field primary-field"><label for="principal">Principal amount</label><div class="input-wrap"><span class="prefix">$</span><input id="principal" max="1000" min="0.1" step="0.25" type="number" value="10"/><span class="suffix">million</span></div></div><div class="field primary-field"><label for="investorCountInput">Number of investors <span class="hint">100 or more</span></label><div class="input-wrap"><input id="investorCountInput" min="100" step="100" type="number" value="1000"/></div></div><div class="field primary-field"><label for="maturity">Maturity</label><div class="input-wrap"><input id="maturity" max="30" min="1" step="1" type="number" value="10"/><span class="suffix">years</span></div></div><div class="field primary-field"><label for="chain">Blockchain network <span class="hint">historical fee model</span></label><div class="input-wrap"><select id="chain"><option value="ethereum">Ethereum Mainnet</option><option value="base">Base (L2 + L1)</option><option value="xrpl">XRPL EVM Sidechain</option></select></div></div><div class="field primary-field"><label for="feeScenario">Historical fee scenario <span class="hint">each chain</span></label><div class="input-wrap"><select id="feeScenario"><option value="p10">Low (P10)</option><option selected="" value="p50">Median (P50)</option><option value="p90">High (P90)</option></select></div></div></div><div class="range-row"><div class="range-heading"><strong>Chart investor range</strong><span>Shared by Charts 01, 03 and 04</span></div><div class="rangeSlot"><div class="scenario-controls">
 <div class="scenario-field"><label for="scenarioMin">Minimum investors</label><div class="input-wrap"><input aria-label="Minimum investor count shared by cost savings, break-even and heatmap charts" id="scenarioMin" min="100" step="100" type="number" value="100"/></div></div>
 <div class="scenario-field"><label for="scenarioMax">Maximum investors shown</label><div class="input-wrap"><input aria-label="Maximum investor count shared by cost savings, break-even and heatmap charts" id="scenarioMax" min="100" step="100" type="number" value="250000"/></div></div>
+</div></div></div><details class="advanced-settings" id="advancedSettings"><summary><span class="advanced-heading">Additional bond and blockchain parameters</span><span class="advanced-preview" id="advancedPreview">AA · Competitive · City · 2 coupons/year · USDC · batch 200</span><span aria-hidden="true" class="advanced-chevron">⌄</span></summary><div class="advanced-groups"><section class="advanced-group"><h4>Traditional issuance settings</h4><div class="advanced-grid traditional-fields"><div class="field"><label for="rating">Credit rating</label><div class="input-wrap"><select id="rating"></select></div></div><div class="field"><label for="sale">Sale type</label><div class="input-wrap"><select id="sale"><option>Competitive</option><option>Negotiated</option></select></div></div><div class="field"><label for="government">Government type</label><div class="input-wrap"><select id="government"><option value="CITY">City</option><option value="COUNTY">County</option></select></div></div><div class="field"><label for="purpose">Issue purpose</label><div class="input-wrap"><select id="purpose"><option value="GeneralPurpose">General purpose</option><option value="Transportation">Transportation</option><option value="WaterRelated">Water related</option><option value="Recreation">Recreation</option><option value="PublicSafety">Public safety</option><option value="OtherPurpose">Other purpose</option></select></div></div><div class="field"><label for="agency">Rating agency</label><div class="input-wrap"><select id="agency"><option>S&amp;P</option><option>Moody's</option><option>Fitch</option></select></div></div><div class="field"><label for="year">Fiscal year</label><div class="input-wrap"><input id="year" max="2100" min="2015" step="1" type="number" value="2026"/></div></div></div></section><section class="advanced-group"><h4>Tokenized execution settings</h4><div class="advanced-grid token-fields"><div class="field"><label for="frequency">Coupon distributions</label><div class="input-wrap"><select id="frequency"><option value="1">1 / year</option><option selected="" value="2">2 / year</option><option value="4">4 / year</option><option value="12">12 / year</option></select></div></div><div class="field"><label for="stablecoin">Settlement stablecoin <span class="hint">separate gas models</span></label><div class="input-wrap"><select id="stablecoin"><option selected="" value="USDC">USDC · official</option><option value="RLUSD">RLUSD · official</option></select></div></div><div class="field"><label for="batchSize">Distribution batch size</label><div class="input-wrap"><select id="batchSize"><option value="500">500</option><option selected="" value="200">200</option><option value="100">100</option><option value="50">50</option><option value="25">25</option><option value="10">10</option><option value="5">5</option></select></div></div><div class="field"><label for="coupon">Coupon rate <span class="hint">fixed research calibration</span></label><div class="input-wrap"><input disabled="" id="coupon" max="5" min="5" type="number" value="5"/><span class="suffix">%</span></div></div></div></section></div></details><div class="input-meta"><div class="lab-model-status" id="modelDomainStatus">Loading research model…</div><div class="error" id="errorBox"></div><details class="inline-details"><summary>Input assumptions</summary><div class="note" id="modelNote">The final production model was trained on FY2015–FY2025; FY2026+ is prospective.</div><div class="note" id="gasInputNote">Three network-specific 365-day fee series (2025-10-26 to 2026-10-25); per-day gas price × native-asset USD rate. Base adds a modeled L1 data fee. P10–P90 describe historical market conditions, not forecast probabilities.</div><div class="note">The gas model was calibrated with <strong>$10M principal, 5% annual coupon and $10 token price</strong>. Changing Traditional principal does not recalibrate blockchain gas; comparisons at other principal sizes are conditional scenarios.</div></details></div></aside>
+<section class="results"><div class="results-intro"><span class="section-kicker">SENSITIVITY ANALYSIS</span>
+<h2>When is tokenization more cost-effective?</h2></div>
+<div class="panel scenario-panel">
+<div class="chart-header"><div><h3>01 · Cost savings by maturity</h3></div><div class="legend"><span><i class="scenario-band"></i>Investor range</span><span><i class="scenario-line"></i>Selected investors</span><span><i class="scenario-zero"></i>Zero savings</span></div></div>
 
-</div>
 <div class="chartbox"><svg aria-label="Cost savings versus maturity for a range of investor counts" id="bandChart" role="img"></svg></div>
 <div aria-live="polite" class="scenario-stats" id="bandStats"></div>
-
 <details class="inline-details"><summary>Scenario assumptions</summary><div class="scenario-caption" id="scenarioNote"></div></details></div><div class="panel gas-panel">
 <div class="chart-header"><div><h3>02 · Blockchain network comparison</h3></div></div>
-
 <div aria-label="Chain-specific historical fees" class="fee-cards" id="gasScenarioCards"></div>
 <div class="fee-threshold" id="feeThreshold"></div>
-
-
 <details class="inline-details"><summary>Historical fee assumptions</summary><div class="fee-controls"><div class="fee-intro" id="feeContext">2025-10-26 to 2026-10-25 · 365 paired daily observations for each network.</div><div class="fee-intro" id="feeCurrent">Select a network above or click a card below. Low / Median / High controls all charts.</div></div><div class="fee-note" id="feeFootnote"></div><div class="data-integrity" id="step8Integrity"></div></details></div><div class="panel chart-panel">
 <div class="chart-header"><div><h3>03 · Cost by number of investors &amp; break-even</h3></div><div class="legend"><span><i class="dot trad"></i>Traditional</span><span><i class="dot token"></i>Tokenized</span><span><i class="dash"></i>Extrapolated</span></div></div>
-<div class="shared-investor-note">Investor range is shared with Charts 01 and 04. Adjust <strong>Maximum investors shown</strong> in Chart 01.</div>
+<div class="shared-investor-note">Shared investor range for Charts 01, 03 and 04. Adjust <strong>Chart investor range</strong> in the scenario inputs above.</div>
 <div class="chartbox"><svg aria-label="Traditional and tokenized cost by investor count" id="chart" role="img"></svg></div>
-<div class="inspector"><label for="investorSlider">Inspect investor count <small id="sliderRangeLabel">100–250,000</small></label><input id="investorSlider" max="250000" min="100" step="100" type="range" value="1000"/><div class="inspect-val"><span id="investorVal">1,000</span><small>investors</small></div></div><p class="curve-scope-note" id="curveScopeNote" aria-live="polite"></p>
+<div class="inspector"><label for="investorSlider">Inspect investor count <small id="sliderRangeLabel">100–250,000</small></label><input id="investorSlider" max="250000" min="100" step="100" type="range" value="1000"/><div class="inspect-val"><span id="investorVal">1,000</span><small>investors</small></div></div><p aria-live="polite" class="curve-scope-note" id="curveScopeNote"></p>
 </div><div class="panel scenario-panel">
 <div class="chart-header"><div><h3>04 · Investor–maturity savings heatmap</h3></div><div class="legend"><span><i class="dot" style="background:#148178"></i>Savings</span><span><i class="dot" style="background:#c95650"></i>Higher cost</span></div></div>
 <div class="chartbox heatmap-box"><svg aria-label="Savings by investor count and maturity heatmap" id="heatmapChart" role="img"></svg></div>
 <div class="heatmap-legend" id="heatmapLegend"></div>
-
 <details class="inline-details"><summary>Heatmap notes</summary><div class="scenario-caption" id="heatmapNote"></div></details></div><div class="panel breakdown"><h3>05 · Cost breakdown</h3><div class="table-wrap"><table><thead><tr><th>Cost component</th><th>Traditional</th><th>Tokenized</th></tr></thead><tbody id="costRows"></tbody></table></div><details class="inline-details"><summary>Scope of compared costs</summary><div class="desc">Traditional: six predicted issuance fees. Tokenized: retained BC/FA/Rating/Other plus blockchain execution over the assumed bond lifecycle. Traditional ongoing servicing costs and other tokenization-specific costs are not modeled.</div></details></div><div class="panel scenario-panel">
 <div class="chart-header"><div><h3>06 · Blockchain gas by lifecycle phase</h3></div></div>
 <div class="gas-metrics" id="phaseSummary"></div>
 <div class="table-wrap"><table class="phase-table"><thead><tr><th>Lifecycle phase</th><th>Economic gas used</th><th>Share</th></tr></thead><tbody id="phaseRows"></tbody></table></div>
-
 <details class="inline-details"><summary>Gas accounting notes</summary><div class="research-caption" id="phaseWarning"></div></details></div><details class="method-details"><summary>Data, model &amp; limitations</summary><div class="panel method"><h3>Model basis and limitations</h3><div class="method-grid"><div class="method-card"><div class="t">Traditional bond · corrected positive-fee production model</div><p>436 Texas GO issues, six predicted components: UW, Bond Counsel, Financial Advisor, Paying Agent, Rating Agency Fee and Other. Underwriter and Paying Agent are assumed replaced for the illustrative tokenized comparison; the other four remain.</p><div class="smallmeta">Nested expanding-window FY2022–2025: n=187 · MAE $71,120 · RMSE $121,965 · R² 0.840 · MAPE 18.38%.</div></div><div class="method-card"><div class="t">Tokenized bond · full-factorial structural phase model (2026-11-09)</div><p>Hardhat-calibrated, separate USDC/RLUSD models of DEPLOY, SETUP, INVEST, TOKEN_DIST, PROCEEDS, COUPON and PRINCIPAL using N, ceil(N/B) and CPY×Maturity. Exact matching observed scenarios use recorded Gas Used; others use modeled Gas. Base L1 uses per-transaction fee-size estimates.</p><div class="smallmeta" id="tokenModelMeta">112,000 scenario grid; 13,010 directly measured; 98,990 model-predicted. Calibration: $10M par, 5% coupon; N 100–10,000, maturity 1–20 years; network pricing from 365 historical paired observations. Values outside experimental bounds are extrapolations.</div></div></div><div class="scientific-note">Cost comparability limitation: Traditional model estimates issuance-related fees, while blockchain cost includes issuance and recurring lifecycle transactions. Conventional recurring servicing costs and some possible tokenization-related legal, platform, compliance and custody fees are not included. Reported “savings” are scenario estimates under these replacement assumptions, not verified net savings.</div><div class="warning" id="warningBox"></div></div></details></section>
 </main>
 </section>
-
-<section aria-labelledby="methodTitle" class="method-page" id="methodPage" role="tabpanel" tabindex="0" hidden>
- <header class="method-banner">
-  <span class="method-eyebrow">RESEARCH FRAMEWORK · INTERIM MODEL / NOV 2026</span>
-  <h2 id="methodTitle">How were the cost models developed?</h2>
-  <p>Two independently developed estimators—one trained on municipal bond issuance records, the other built from smart-contract execution experiments—are linked through an explicit cost-replacement assumption.</p>
-  <div class="method-stats" aria-label="Research dataset at a glance">
-   <div class="method-stat"><strong>436</strong><span>Traditional bond issues in final model</span></div>
-   <div class="method-stat"><strong>112,000</strong><span>Tokenized scenario combinations</span></div>
-   <div class="method-stat"><strong>13,010</strong><span>Direct Hardhat Gas observations</span></div>
-   <div class="method-stat"><strong>365 days</strong><span>Paired historical network pricing</span></div>
-  </div>
- </header>
-
- <section class="method-section" aria-labelledby="methodArchitecture">
-  <div class="method-section-heading"><span class="method-index">01</span><div><h3 id="methodArchitecture">Two independent cost models</h3><p>Different data, different estimation methods, joined only at the cost-comparison stage.</p></div></div>
-  <div class="method-pipelines">
-   <article class="method-pipeline traditional">
-    <span class="method-pipeline-label">EMPIRICAL MODEL</span>
-    <h4>Traditional municipal bond</h4>
-    <div class="method-flowstep"><div class="label">Historical issuance records</div><div class="caption">Texas Bond Review Board · FY2015–FY2025 · 479 source records screened to 436 positive-fee, complete-case issues.</div></div>
-    <div class="method-flow-arrow">↓</div>
-    <div class="method-flowstep"><div class="label">Six component-level estimators</div><div class="caption">Underwriter · Bond Counsel · Financial Advisor · Paying Agent · Rating Agency · Other. Each fee component is modeled separately.</div></div>
-    <div class="method-flow-arrow">↓</div>
-    <div class="method-flowstep"><div class="label">Time-ordered model selection and validation</div><div class="caption">Nested expanding-window evaluation using FY2022–2025 as prospective test years (187 issues), followed by refitting on all 436.</div></div>
-    <div class="method-pipeline-output">Predicted issuance fees (USD)</div>
-   </article>
-   <article class="method-pipeline tokenized">
-    <span class="method-pipeline-label">EXPERIMENT-DRIVEN MODEL</span>
-    <h4>Tokenized municipal bond</h4>
-    <div class="method-flowstep"><div class="label">EVM bond lifecycle experiments</div><div class="caption">Local Hardhat transactions for deployment, setup, investment, token distribution, proceeds, coupon and principal.</div></div>
-    <div class="method-flow-arrow">↓</div>
-    <div class="method-flowstep"><div class="label">Structural phase-wise Gas prediction</div><div class="caption">112,000 design combinations; 13,010 measured, 98,990 predicted. Separate USDC and RLUSD parameterizations; measured Gas takes priority when available.</div></div>
-    <div class="method-flow-arrow">↓</div>
-    <div class="method-flowstep"><div class="label">Chain-specific USD conversion</div><div class="caption">Daily Gas Price × native asset/USD price for Ethereum and XRPL EVM; Base also includes a separately modeled L1 data fee.</div></div>
-    <div class="method-pipeline-output">Estimated blockchain lifecycle fees (USD, P10 / P50 / P90)</div>
-   </article>
-  </div>
-  <div class="method-join">
-   <h4>Integration: what does “estimated savings” mean?</h4>
-   <div class="method-join-grid">
-    <div class="method-join-block"><span class="hint">Traditional total</span><strong>UW + BC + FA + PA + RA + Other</strong></div>
-    <span class="method-operator">→</span>
-    <div class="method-join-block"><span class="hint">Tokenized estimate</span><strong>BC + FA + RA + Other + Blockchain</strong></div>
-    <span class="method-operator">→</span>
-    <div class="method-join-block"><span class="hint">Savings under assumed replacement</span><strong>Traditional − Tokenized</strong></div>
-   </div>
-   <p class="method-join-note">UW = underwriting; PA = paying agent; BC = bond counsel; FA = financial advisor; RA = rating agency. The model assumes UW and PA fees are fully replaced. This is a scenario assumption, not evidence that all intermediary costs vanish in practice.</p>
-  </div>
- </section>
-
- <section class="method-section" aria-labelledby="methodEvolution">
-  <div class="method-section-heading"><span class="method-index">02</span><div><h3 id="methodEvolution">How the models evolved</h3><p>From raw records and gas measurements to reproducible predictors.</p></div></div>
-  <div class="method-columns">
-   <article class="method-panel traditional"><h4>Traditional model development</h4>
-    <div class="method-timeline">
-     <div class="method-stage"><span class="method-stage-no">1</span><div class="method-stage-inner"><strong>Build a consistent issuance sample</strong><p>479 source issues → exclude 9 private placements, 31 issues with nonpositive component fees and 3 missing ratings → 436 final observations.</p></div></div>
-     <div class="method-stage"><span class="method-stage-no">2</span><div class="method-stage-inner"><strong>Choose predictors by fee mechanism</strong><p>Use transaction size, credit rating, sale type and relevant issuer/transaction characteristics. Screen candidate variables separately for each service fee.</p></div></div>
-     <div class="method-stage"><span class="method-stage-no">3</span><div class="method-stage-inner"><strong>Validate chronologically; refit for deployment</strong><p>Use nested expanding windows to assess forward prediction, then refit the selected estimators on all 436 issues.</p></div></div>
-    </div>
-    <details class="inline-details"><summary>Which model predicts each fee?</summary>
-     <table class="method-model-table"><thead><tr><th>Fee component</th><th>Production estimator</th></tr></thead><tbody>
-      <tr><td>Underwriter</td><td>Ridge Log</td></tr><tr><td>Bond Counsel</td><td>Fixed Power</td></tr><tr><td>Financial Advisor</td><td>CatBoost Raw</td></tr><tr><td>Paying Agent</td><td>Median</td></tr><tr><td>Rating Agency Fee</td><td>CatBoost Ratio</td></tr><tr><td>Other Costs</td><td>Fixed Power</td></tr>
-     </tbody></table>
-    </details>
-   </article>
-   <article class="method-panel tokenized"><h4>Tokenized model development</h4>
-    <div class="method-timeline">
-     <div class="method-stage"><span class="method-stage-no">1</span><div class="method-stage-inner"><strong>Implement transaction lifecycle</strong><p>Deploy and execute EVM bond contracts with USDC/RLUSD settlement; measure Economic Gas Used and transaction counts by phase.</p></div></div>
-     <div class="method-stage"><span class="method-stage-no">2</span><div class="method-stage-inner"><strong>Measure representative scenarios</strong><p>Initial Step 8 included 210 successful scenario runs; build the first 365-day cost estimates for Ethereum, Base and XRPL EVM.</p></div></div>
-     <div class="method-stage"><span class="method-stage-no">3</span><div class="method-stage-inner"><strong>Expand to a 112,000-case factorial design</strong><p>Vary investor count, batch size, coupon frequency, maturity and stablecoin. As of this interim model, 13,010 cases are directly measured.</p></div></div>
-     <div class="method-stage"><span class="method-stage-no">4</span><div class="method-stage-inner"><strong>Fit seven phase-specific Gas equations</strong><p>Weighted linear models use investor count, batch count and payment events; Base gets an additional validated fee-data-size model.</p></div></div>
-    </div>
-   </article>
-  </div>
- </section>
-
- <section class="method-section" aria-labelledby="methodEquations">
-  <div class="method-section-heading"><span class="method-index">03</span><div><h3 id="methodEquations">What exactly is being calculated?</h3><p>Experimental variables, structural Gas equations and network pricing are separate layers.</p></div></div>
-  <div class="method-detail-grid">
-   <article class="method-table-card"><h4 style="font-size:14px;margin:0 0 10px">Tokenized experiment design</h4>
-    <table class="method-model-table"><thead><tr><th>Variable</th><th>Experiment range</th></tr></thead><tbody>
-     <tr><td>Investors, N</td><td>100–10,000, step 100</td></tr><tr><td>Batch size, B</td><td>5 · 10 · 25 · 50 · 100 · 200 · 500</td></tr><tr><td>Coupons per year, CPY</td><td>1 · 2 · 4 · 12</td></tr><tr><td>Maturity, MY</td><td>1–20 years</td></tr><tr><td>Settlement</td><td>USDC or RLUSD</td></tr>
-    </tbody></table>
-    <div class="method-assumption" style="margin-top:12px"><h4>Held fixed in the Full Factorial</h4><p>Principal $10 million · annual coupon rate 5% · token price $10 · official stablecoin implementations · Local Hardhat execution.</p></div>
-   </article>
-   <article class="method-table-card"><h4 style="font-size:14px;margin:0 0 10px">Gas prediction logic</h4>
-    <div class="method-equation">H = ceil(N / B) &nbsp;·&nbsp; K = CPY × MY<div class="minor">H is the number of distribution batches; K is the total number of coupon events.</div></div>
-    <div class="method-equation" style="margin-top:10px">G = Σ phase Gas(N, H, K, stablecoin)<div class="minor">Deploy, Setup, Invest, Token Distribution, Proceeds, Coupon, Principal. First and subsequent coupon events are modeled separately.</div></div>
-    <div class="method-equation" style="margin-top:10px">Tx = 12 + 2N + (K+2)H + 2K<div class="minor">Deterministic economic transaction count in the current experiment design.</div></div>
-   </article>
-  </div>
-  <div class="method-table-card" style="margin-top:14px">
-   <h4 style="font-size:14px;margin:0 0 10px">Historical network fee conversion</h4>
-   <div class="method-columns">
-    <div>
-     <div class="method-kv"><span class="name">Ethereum Mainnet</span><span class="val">G × daily ETH/USD-per-Gas</span></div>
-     <div class="method-kv"><span class="name">XRPL EVM</span><span class="val">G × daily XRP/USD-per-Gas</span></div>
-     <div class="method-kv"><span class="name">Base (L2 + L1)</span><span class="val">G × daily L2 rate + D × daily L1 rate</span></div>
-    </div>
-    <div class="method-assumption"><h4>What are P10 / P50 / P90?</h4><p>For each of 365 dates (Oct 26, 2025–Oct 25, 2026), the same-date network fee and asset price are combined into USD cost. The percentiles are then taken over these 365 <em>total lifecycle-cost scenarios</em>—not over Gas Price and asset price separately. D is Base's modeled L1 fee-data size.</p></div>
-   </div>
-  </div>
- </section>
-
- <section class="method-section" aria-labelledby="methodValidation">
-  <div class="method-section-heading"><span class="method-index">04</span><div><h3 id="methodValidation">How well were the models checked?</h3><p>These metrics describe different predicted quantities; do not compare their percentages as if they were the same target.</p></div></div>
-  <div class="method-validate-grid">
-   <article class="method-validate"><h4>Traditional issuance-cost prediction</h4><div class="big">18.38% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">Nested expanding-window test · FY2022–2025 · n=187</div><div class="method-kv"><span class="name">MAE</span><span class="val">$71,120</span></div><div class="method-kv"><span class="name">RMSE</span><span class="val">$121,965</span></div><div class="method-kv"><span class="name">R²</span><span class="val">0.840</span></div></article>
-   <article class="method-validate"><h4>Tokenized total-Gas prediction</h4><div class="big">0.0278% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">USDC Full Factorial held-out group · n=1,280</div><div class="method-kv"><span class="name">Additional USDC extrapolation (n=10)</span><span class="val">0.1458%</span></div><div class="method-kv"><span class="name">Additional RLUSD extrapolation (n=10)</span><span class="val">0.1629%</span></div><div class="method-kv"><span class="name">RLUSD observed factorial scenarios</span><span class="val">4</span></div></article>
-   <article class="method-validate"><h4>Base L1 fee-size model</h4><div class="big">0.307% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">Scenario-aggregate data size, representative validation (24 cases)</div><div class="method-kv"><span class="name">External 20-case validation</span><span class="val">0.354%</span></div><div class="method-kv"><span class="name">Representative source scenarios</span><span class="val">52</span></div><div class="method-kv"><span class="name">Transaction observations</span><span class="val">33,984</span></div></article>
-  </div>
-  <div class="method-assumption" style="margin-top:13px"><h4>Validation boundaries</h4><p>Traditional test error is in USD issuance fees; tokenized errors are relative to simulated total Gas; Base error refers to estimated fee-data size. The RLUSD factorial sample is especially limited. Held-out and external sets supported model development but do not constitute live-network validation or an independent blind evaluation of every extreme configuration.</p></div>
- </section>
-
- <section class="method-section" aria-labelledby="methodInterpretation">
-  <div class="method-section-heading"><span class="method-index">05</span><div><h3 id="methodInterpretation">What is measured, predicted or assumed?</h3><p>A necessary distinction when interpreting results or presenting them to decision-makers.</p></div></div>
-  <div class="method-markers">
-   <div class="method-marker"><span class="method-marker-flag">MEASURED</span><strong>Observed inputs</strong><p>436 actual issuance records; 13,010 directly measured Full Factorial Hardhat Gas cases; 365 historical daily network prices and exchange rates. The past fee data describe market conditions, not fees paid during the simulations.</p></div>
-   <div class="method-marker predicted"><span class="method-marker-flag">PREDICTED</span><strong>Model-derived outputs</strong><p>Six traditional fee components; 98,990 Full Factorial Gas cases; Base L1 fee-data size; USD lifecycle costs and investor-count extrapolations beyond the 10,000-investor experimental range; maturity scenarios are currently supported through 30 years.</p></div>
-   <div class="method-marker assumed"><span class="method-marker-flag">ASSUMED</span><strong>Comparison scenario</strong><p>Underwriter and Paying Agent fees are fully replaced; four other issuance fees are retained. The tokenized Gas model is calibrated at $10M par, 5% coupon and $10 token price.</p></div>
-  </div>
-  <div class="method-caution"><strong>Scope limitation · Read before interpreting the estimated savings</strong><p>The Traditional model predicts selected issuance fees; the blockchain model covers initial transactions plus coupon/principal servicing through maturity. Conventional ongoing servicing costs and some tokenization-specific legal, platform, custody and compliance costs are not fully represented. Consequently, the displayed difference is a conditional scenario estimate—not a fully matched lifecycle cost comparison or demonstrated net savings. Gas predictions outside 10,000 investors or 20 years are unvalidated extrapolations.</p></div>
- </section>
-
- <section class="method-section" aria-labelledby="methodResources">
-  <div class="method-section-heading"><span class="method-index">06</span><div><h3 id="methodResources">Research data and reproducibility</h3></div></div>
-  <div class="method-pending" role="status">Under Development</div>
- </section>
- <section class="method-section" aria-labelledby="methodAcknowledgements">
-  <div class="method-section-heading"><span class="method-index">07</span><div><h3 id="methodAcknowledgements">Acknowledgements</h3></div></div>
-  <div class="ack-grid">
-   <a class="ack-card" href="https://www.infrafin.io/" target="_blank" rel="noopener noreferrer" aria-label="Visit Center for Digital Asset Finance at the University of Michigan">
-    <span class="ack-role">Research lab</span><div class="ack-logo ack-difin"><img src="/assets/difin-logo.png" width="360" height="37" alt="University of Michigan Center for Digital Asset Finance logo"/></div>
-    <span class="ack-link">infrafin.io <span aria-hidden="true">↗</span></span>
-   </a>
-   <a class="ack-card" href="https://ripple.com/impact/ubri/" target="_blank" rel="noopener noreferrer" aria-label="Visit Ripple University Blockchain Research Initiative">
-    <span class="ack-role">Research sponsor</span><div class="ack-logo ack-ubri"><img src="/assets/ubri-logo.png" alt="Ripple University Blockchain Research Initiative logo"/></div>
-    <span class="ack-link">ripple.com/impact/ubri <span aria-hidden="true">↗</span></span>
-   </a>
-  </div>
-  <div class="method-end"><button class="method-back" id="methodBackToAnalysis" type="button">← Return to cost analysis</button></div>
- </section>
+<section aria-labelledby="methodTitle" class="method-page" hidden="" id="methodPage" role="tabpanel" tabindex="0">
+<header class="method-banner">
+<span class="method-eyebrow">RESEARCH FRAMEWORK · INTERIM MODEL / NOV 2026</span>
+<h2 id="methodTitle">How were the cost models developed?</h2>
+<p>Two independently developed estimators—one trained on municipal bond issuance records, the other built from smart-contract execution experiments—are linked through an explicit cost-replacement assumption.</p>
+<div aria-label="Research dataset at a glance" class="method-stats">
+<div class="method-stat"><strong>436</strong><span>Traditional bond issues in final model</span></div>
+<div class="method-stat"><strong>112,000</strong><span>Tokenized scenario combinations</span></div>
+<div class="method-stat"><strong>13,010</strong><span>Direct Hardhat Gas observations</span></div>
+<div class="method-stat"><strong>365 days</strong><span>Paired historical network pricing</span></div>
+</div>
+</header>
+<section aria-labelledby="methodArchitecture" class="method-section">
+<div class="method-section-heading"><span class="method-index">01</span><div><h3 id="methodArchitecture">Two independent cost models</h3><p>Different data, different estimation methods, joined only at the cost-comparison stage.</p></div></div>
+<div class="method-pipelines">
+<article class="method-pipeline traditional">
+<span class="method-pipeline-label">EMPIRICAL MODEL</span>
+<h4>Traditional municipal bond</h4>
+<div class="method-flowstep"><div class="label">Historical issuance records</div><div class="caption">Texas Bond Review Board · FY2015–FY2025 · 479 source records screened to 436 positive-fee, complete-case issues.</div></div>
+<div class="method-flow-arrow">↓</div>
+<div class="method-flowstep"><div class="label">Six component-level estimators</div><div class="caption">Underwriter · Bond Counsel · Financial Advisor · Paying Agent · Rating Agency · Other. Each fee component is modeled separately.</div></div>
+<div class="method-flow-arrow">↓</div>
+<div class="method-flowstep"><div class="label">Time-ordered model selection and validation</div><div class="caption">Nested expanding-window evaluation using FY2022–2025 as prospective test years (187 issues), followed by refitting on all 436.</div></div>
+<div class="method-pipeline-output">Predicted issuance fees (USD)</div>
+</article>
+<article class="method-pipeline tokenized">
+<span class="method-pipeline-label">EXPERIMENT-DRIVEN MODEL</span>
+<h4>Tokenized municipal bond</h4>
+<div class="method-flowstep"><div class="label">EVM bond lifecycle experiments</div><div class="caption">Local Hardhat transactions for deployment, setup, investment, token distribution, proceeds, coupon and principal.</div></div>
+<div class="method-flow-arrow">↓</div>
+<div class="method-flowstep"><div class="label">Structural phase-wise Gas prediction</div><div class="caption">112,000 design combinations; 13,010 measured, 98,990 predicted. Separate USDC and RLUSD parameterizations; measured Gas takes priority when available.</div></div>
+<div class="method-flow-arrow">↓</div>
+<div class="method-flowstep"><div class="label">Chain-specific USD conversion</div><div class="caption">Daily Gas Price × native asset/USD price for Ethereum and XRPL EVM; Base also includes a separately modeled L1 data fee.</div></div>
+<div class="method-pipeline-output">Estimated blockchain lifecycle fees (USD, P10 / P50 / P90)</div>
+</article>
+</div>
+<div class="method-join">
+<h4>Integration: what does “estimated savings” mean?</h4>
+<div class="method-join-grid">
+<div class="method-join-block"><span class="hint">Traditional total</span><strong>UW + BC + FA + PA + RA + Other</strong></div>
+<span class="method-operator">→</span>
+<div class="method-join-block"><span class="hint">Tokenized estimate</span><strong>BC + FA + RA + Other + Blockchain</strong></div>
+<span class="method-operator">→</span>
+<div class="method-join-block"><span class="hint">Savings under assumed replacement</span><strong>Traditional − Tokenized</strong></div>
+</div>
+<p class="method-join-note">UW = underwriting; PA = paying agent; BC = bond counsel; FA = financial advisor; RA = rating agency. The model assumes UW and PA fees are fully replaced. This is a scenario assumption, not evidence that all intermediary costs vanish in practice.</p>
+</div>
 </section>
-
+<section aria-labelledby="methodEvolution" class="method-section">
+<div class="method-section-heading"><span class="method-index">02</span><div><h3 id="methodEvolution">How the models evolved</h3><p>From raw records and gas measurements to reproducible predictors.</p></div></div>
+<div class="method-columns">
+<article class="method-panel traditional"><h4>Traditional model development</h4>
+<div class="method-timeline">
+<div class="method-stage"><span class="method-stage-no">1</span><div class="method-stage-inner"><strong>Build a consistent issuance sample</strong><p>479 source issues → exclude 9 private placements, 31 issues with nonpositive component fees and 3 missing ratings → 436 final observations.</p></div></div>
+<div class="method-stage"><span class="method-stage-no">2</span><div class="method-stage-inner"><strong>Choose predictors by fee mechanism</strong><p>Use transaction size, credit rating, sale type and relevant issuer/transaction characteristics. Screen candidate variables separately for each service fee.</p></div></div>
+<div class="method-stage"><span class="method-stage-no">3</span><div class="method-stage-inner"><strong>Validate chronologically; refit for deployment</strong><p>Use nested expanding windows to assess forward prediction, then refit the selected estimators on all 436 issues.</p></div></div>
+</div>
+<details class="inline-details"><summary>Which model predicts each fee?</summary>
+<table class="method-model-table"><thead><tr><th>Fee component</th><th>Production estimator</th></tr></thead><tbody>
+<tr><td>Underwriter</td><td>Ridge Log</td></tr><tr><td>Bond Counsel</td><td>Fixed Power</td></tr><tr><td>Financial Advisor</td><td>CatBoost Raw</td></tr><tr><td>Paying Agent</td><td>Median</td></tr><tr><td>Rating Agency Fee</td><td>CatBoost Ratio</td></tr><tr><td>Other Costs</td><td>Fixed Power</td></tr>
+</tbody></table>
+</details>
+</article>
+<article class="method-panel tokenized"><h4>Tokenized model development</h4>
+<div class="method-timeline">
+<div class="method-stage"><span class="method-stage-no">1</span><div class="method-stage-inner"><strong>Implement transaction lifecycle</strong><p>Deploy and execute EVM bond contracts with USDC/RLUSD settlement; measure Economic Gas Used and transaction counts by phase.</p></div></div>
+<div class="method-stage"><span class="method-stage-no">2</span><div class="method-stage-inner"><strong>Measure representative scenarios</strong><p>Initial Step 8 included 210 successful scenario runs; build the first 365-day cost estimates for Ethereum, Base and XRPL EVM.</p></div></div>
+<div class="method-stage"><span class="method-stage-no">3</span><div class="method-stage-inner"><strong>Expand to a 112,000-case factorial design</strong><p>Vary investor count, batch size, coupon frequency, maturity and stablecoin. As of this interim model, 13,010 cases are directly measured.</p></div></div>
+<div class="method-stage"><span class="method-stage-no">4</span><div class="method-stage-inner"><strong>Fit seven phase-specific Gas equations</strong><p>Weighted linear models use investor count, batch count and payment events; Base gets an additional validated fee-data-size model.</p></div></div>
+</div>
+</article>
+</div>
+</section>
+<section aria-labelledby="methodEquations" class="method-section">
+<div class="method-section-heading"><span class="method-index">03</span><div><h3 id="methodEquations">What exactly is being calculated?</h3><p>Experimental variables, structural Gas equations and network pricing are separate layers.</p></div></div>
+<div class="method-detail-grid">
+<article class="method-table-card"><h4 style="font-size:14px;margin:0 0 10px">Tokenized experiment design</h4>
+<table class="method-model-table"><thead><tr><th>Variable</th><th>Experiment range</th></tr></thead><tbody>
+<tr><td>Investors, N</td><td>100–10,000, step 100</td></tr><tr><td>Batch size, B</td><td>5 · 10 · 25 · 50 · 100 · 200 · 500</td></tr><tr><td>Coupons per year, CPY</td><td>1 · 2 · 4 · 12</td></tr><tr><td>Maturity, MY</td><td>1–20 years</td></tr><tr><td>Settlement</td><td>USDC or RLUSD</td></tr>
+</tbody></table>
+<div class="method-assumption" style="margin-top:12px"><h4>Held fixed in the Full Factorial</h4><p>Principal $10 million · annual coupon rate 5% · token price $10 · official stablecoin implementations · Local Hardhat execution.</p></div>
+</article>
+<article class="method-table-card"><h4 style="font-size:14px;margin:0 0 10px">Gas prediction logic</h4>
+<div class="method-equation">H = ceil(N / B)  ·  K = CPY × MY<div class="minor">H is the number of distribution batches; K is the total number of coupon events.</div></div>
+<div class="method-equation" style="margin-top:10px">G = Σ phase Gas(N, H, K, stablecoin)<div class="minor">Deploy, Setup, Invest, Token Distribution, Proceeds, Coupon, Principal. First and subsequent coupon events are modeled separately.</div></div>
+<div class="method-equation" style="margin-top:10px">Tx = 12 + 2N + (K+2)H + 2K<div class="minor">Deterministic economic transaction count in the current experiment design.</div></div>
+</article>
+</div>
+<div class="method-table-card" style="margin-top:14px">
+<h4 style="font-size:14px;margin:0 0 10px">Historical network fee conversion</h4>
+<div class="method-columns">
+<div>
+<div class="method-kv"><span class="name">Ethereum Mainnet</span><span class="val">G × daily ETH/USD-per-Gas</span></div>
+<div class="method-kv"><span class="name">XRPL EVM</span><span class="val">G × daily XRP/USD-per-Gas</span></div>
+<div class="method-kv"><span class="name">Base (L2 + L1)</span><span class="val">G × daily L2 rate + D × daily L1 rate</span></div>
+</div>
+<div class="method-assumption"><h4>What are P10 / P50 / P90?</h4><p>For each of 365 dates (Oct 26, 2025–Oct 25, 2026), the same-date network fee and asset price are combined into USD cost. The percentiles are then taken over these 365 <em>total lifecycle-cost scenarios</em>—not over Gas Price and asset price separately. D is Base's modeled L1 fee-data size.</p></div>
+</div>
+</div>
+</section>
+<section aria-labelledby="methodValidation" class="method-section">
+<div class="method-section-heading"><span class="method-index">04</span><div><h3 id="methodValidation">How well were the models checked?</h3><p>These metrics describe different predicted quantities; do not compare their percentages as if they were the same target.</p></div></div>
+<div class="method-validate-grid">
+<article class="method-validate"><h4>Traditional issuance-cost prediction</h4><div class="big">18.38% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">Nested expanding-window test · FY2022–2025 · n=187</div><div class="method-kv"><span class="name">MAE</span><span class="val">$71,120</span></div><div class="method-kv"><span class="name">RMSE</span><span class="val">$121,965</span></div><div class="method-kv"><span class="name">R²</span><span class="val">0.840</span></div></article>
+<article class="method-validate"><h4>Tokenized total-Gas prediction</h4><div class="big">0.0278% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">USDC Full Factorial held-out group · n=1,280</div><div class="method-kv"><span class="name">Additional USDC extrapolation (n=10)</span><span class="val">0.1458%</span></div><div class="method-kv"><span class="name">Additional RLUSD extrapolation (n=10)</span><span class="val">0.1629%</span></div><div class="method-kv"><span class="name">RLUSD observed factorial scenarios</span><span class="val">4</span></div></article>
+<article class="method-validate"><h4>Base L1 fee-size model</h4><div class="big">0.307% <span style="font-size:11px;color:#657b91">MAPE</span></div><div class="small">Scenario-aggregate data size, representative validation (24 cases)</div><div class="method-kv"><span class="name">External 20-case validation</span><span class="val">0.354%</span></div><div class="method-kv"><span class="name">Representative source scenarios</span><span class="val">52</span></div><div class="method-kv"><span class="name">Transaction observations</span><span class="val">33,984</span></div></article>
+</div>
+<div class="method-assumption" style="margin-top:13px"><h4>Validation boundaries</h4><p>Traditional test error is in USD issuance fees; tokenized errors are relative to simulated total Gas; Base error refers to estimated fee-data size. The RLUSD factorial sample is especially limited. Held-out and external sets supported model development but do not constitute live-network validation or an independent blind evaluation of every extreme configuration.</p></div>
+</section>
+<section aria-labelledby="methodInterpretation" class="method-section">
+<div class="method-section-heading"><span class="method-index">05</span><div><h3 id="methodInterpretation">What is measured, predicted or assumed?</h3><p>A necessary distinction when interpreting results or presenting them to decision-makers.</p></div></div>
+<div class="method-markers">
+<div class="method-marker"><span class="method-marker-flag">MEASURED</span><strong>Observed inputs</strong><p>436 actual issuance records; 13,010 directly measured Full Factorial Hardhat Gas cases; 365 historical daily network prices and exchange rates. The past fee data describe market conditions, not fees paid during the simulations.</p></div>
+<div class="method-marker predicted"><span class="method-marker-flag">PREDICTED</span><strong>Model-derived outputs</strong><p>Six traditional fee components; 98,990 Full Factorial Gas cases; Base L1 fee-data size; USD lifecycle costs and investor-count extrapolations beyond the 10,000-investor experimental range; maturity scenarios are currently supported through 30 years.</p></div>
+<div class="method-marker assumed"><span class="method-marker-flag">ASSUMED</span><strong>Comparison scenario</strong><p>Underwriter and Paying Agent fees are fully replaced; four other issuance fees are retained. The tokenized Gas model is calibrated at $10M par, 5% coupon and $10 token price.</p></div>
+</div>
+<div class="method-caution"><strong>Scope limitation · Read before interpreting the estimated savings</strong><p>The Traditional model predicts selected issuance fees; the blockchain model covers initial transactions plus coupon/principal servicing through maturity. Conventional ongoing servicing costs and some tokenization-specific legal, platform, custody and compliance costs are not fully represented. Consequently, the displayed difference is a conditional scenario estimate—not a fully matched lifecycle cost comparison or demonstrated net savings. Gas predictions outside 10,000 investors or 20 years are unvalidated extrapolations.</p></div>
+</section>
+<section aria-labelledby="methodResources" class="method-section">
+<div class="method-section-heading"><span class="method-index">06</span><div><h3 id="methodResources">Research data and reproducibility</h3></div></div>
+<div class="method-pending" role="status">Under Development</div>
+</section>
+<section aria-labelledby="methodAcknowledgements" class="method-section">
+<div class="method-section-heading"><span class="method-index">07</span><div><h3 id="methodAcknowledgements">Acknowledgements</h3></div></div>
+<div class="ack-grid">
+<a aria-label="Visit Center for Digital Asset Finance at the University of Michigan" class="ack-card" href="https://infrafin.io/" rel="noopener noreferrer" target="_blank">
+<span class="ack-role">Research lab</span><div class="ack-logo ack-difin"><img alt="University of Michigan Center for Digital Asset Finance logo" height="37" src="/assets/difin-logo.png" width="360"/></div>
+<span class="ack-link">infrafin.io <span aria-hidden="true">↗</span></span>
+</a>
+<a aria-label="Visit Ripple University Blockchain Research Initiative" class="ack-card" href="https://ripple.com/impact/ubri/" rel="noopener noreferrer" target="_blank">
+<span class="ack-role">Research sponsor</span><div class="ack-logo ack-ubri"><img alt="Ripple University Blockchain Research Initiative logo" src="/assets/ubri-logo.png"/></div>
+<span class="ack-link">ripple.com/impact/ubri <span aria-hidden="true">↗</span></span>
+</a>
+</div>
+<div class="method-end"><button class="method-back" id="methodBackToAnalysis" type="button">← Return to cost analysis</button></div>
+</section>
+</section>
 <footer>Research prototype. Predictions are model-based estimates and not quotations or financial advice.</footer>
 </div>
 <script src="/research-model.js"></script>
@@ -732,7 +784,6 @@ $('investorCountInput').addEventListener('change',()=>{if(current)render(current
 window.addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(()=>{if(current)render(current.data)},150)});
 if(!globalThis.BOND_ENGINE){$('errorBox').textContent='Research model could not load. Restart the bundled website server; opening index.html directly is not supported.';$('errorBox').style.display='block';}else update();
 </script>
-
 <script>
 (function(){
   'use strict';
@@ -776,5 +827,61 @@ if(!globalThis.BOND_ENGINE){$('errorBox').textContent='Research model could not 
   activateFromURL();
 })();
 </script>
-</body>
+<script>
+(function(){
+  'use strict';
+  const byId=id=>document.getElementById(id);
+  const bar=byId('quickBar'),editor=document.querySelector('.input-panel');
+  const connections=[
+    ['principal','quickPrincipal'],
+    ['investorCountInput','quickInvestors'],
+    ['maturity','quickMaturity'],
+    ['chain','quickChain'],
+    ['feeScenario','quickFeeScenario'],
+    ['scenarioMax','quickChartMax']
+  ];
+  function syncQuick(force=false){
+    connections.forEach(([originId,quickId])=>{
+      const origin=byId(originId),quick=byId(quickId);
+      if(origin&&quick&&(force||document.activeElement!==quick))quick.value=origin.value;
+    });
+    const val=id=>byId(id)?.value||'';
+    const network=val('stablecoin');
+    byId('advancedPreview').textContent=`${val('rating')} · ${val('sale')} · ${val('government')} · ${val('frequency')} coupon(s)/year · ${network} · batch ${val('batchSize')}`;
+  }
+  function updateQuickVisibility(){
+    const costPage=byId('costPage');
+    const offscreen=editor.getBoundingClientRect().bottom < -10;
+    bar.hidden=!!costPage.hidden || !offscreen;
+  }
+  connections.forEach(([originId,quickId])=>{
+    const origin=byId(originId),quick=byId(quickId);
+    quick.addEventListener('change',()=>{
+      origin.value=quick.value;
+      origin.dispatchEvent(new Event('change',{bubbles:true}));
+      setTimeout(()=>syncQuick(true),0);
+    });
+    origin.addEventListener('change',()=>setTimeout(()=>syncQuick(true),0));
+  });
+  ['rating','sale','government','purpose','agency','year','stablecoin','batchSize','frequency','scenarioMin'].forEach(id=>{
+    byId(id).addEventListener('change',()=>setTimeout(()=>syncQuick(true),0));
+  });
+  byId('investorSlider').addEventListener('input',()=>setTimeout(()=>syncQuick(true),0));
+  byId('heatmapChart').addEventListener('pointerup',()=>setTimeout(()=>syncQuick(true),0));
+  byId('gasScenarioCards').addEventListener('click',()=>setTimeout(()=>syncQuick(true),0));
+  const sourceValue=byId('investorVal');
+  new MutationObserver(()=>syncQuick()).observe(sourceValue,{childList:true,characterData:true,subtree:true});
+  byId('editAllInputs').addEventListener('click',()=>{
+    const target=Math.max(0,editor.getBoundingClientRect().top+window.scrollY-22);
+    window.scrollTo({top:target,behavior:'smooth'});
+  });
+  window.addEventListener('scroll',updateQuickVisibility,{passive:true});
+  window.addEventListener('resize',updateQuickVisibility,{passive:true});
+  window.addEventListener('hashchange',()=>setTimeout(updateQuickVisibility,30));
+  byId('tabCost').addEventListener('click',()=>setTimeout(updateQuickVisibility,30));
+  byId('tabMethod').addEventListener('click',()=>setTimeout(updateQuickVisibility,30));
+  syncQuick(true);
+  updateQuickVisibility();
+})();
+</script></body>
 </html>
